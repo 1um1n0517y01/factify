@@ -36,7 +36,6 @@ async function loadFacts() {
   );
   const data = await res.json();
 
-  console.log(data);
   createFactsList(data);
 }
 
