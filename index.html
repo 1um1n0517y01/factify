@@ -12,7 +12,7 @@
       rel="stylesheet"
     />
 
-    <link rel="stylesheet" href="style.css" />
+    <link rel="stylesheet" href="./css/style.css" />
     <title>Factify</title>
   </head>
   <body>
@@ -22,10 +22,10 @@
           <img src="logo.png" alt="Factify logo" width="68" height="68" />
           <h1>Factify</h1>
         </div>
-        <button class="btn btn-large">Share a fact</button>
+        <button class="btn btn-large btn-open">Share a fact</button>
       </header>
 
-      <form action="#" class="fact-form">
+      <form action="#" class="fact-form hidden">
         <input type="text" placeholder="Share a fact with the world..." />
         <span>200</span>
         <input type="text" placeholder="Trustworthy source..." />
@@ -64,7 +64,7 @@
         </aside>
 
         <section>
-          <ul>
+          <ul class="facts-list">
             <li class="fact">
               <p>
                 React is being developed by Meta (formerly facebook)
@@ -107,5 +107,6 @@
         </section>
       </main>
     </div>
+    <script src="./js/script.js"></script>
   </body>
 </html>
