@@ -1,15 +1,39 @@
 import './style.css';
 
 function App() {
+  const appTitle = 'Factify';
+
   return (
-    <header className='header'>
-      <div className='logo'>
-        <img src='logo.png' alt='Factify logo' width='68' height='68' />
-        <h1>Factify</h1>
-      </div>
-      <button className='btn btn-large btn-open'>Share a fact</button>
-    </header>
+    // We can use fragment <></> as parent element if we want to use more than one JSX element in return statement
+    <>
+      {/* HEADER */}
+      <header className='header'>
+        <div className='logo'>
+          <img src='logo.png' alt='Factify logo' width='68' height='68' />
+          <h1>{appTitle}</h1>
+        </div>
+        <button className='btn btn-large btn-open'>Share a fact</button>
+      </header>
+
+      <NewFactForm />
+      <main className='main'>
+        <CategoryFilter />
+        <FactList />
+      </main>
+    </>
   );
+}
+
+function NewFactForm() {
+  return <form className='fact-form'>Fact form</form>;
+}
+
+function CategoryFilter() {
+  return <aside>Category filter</aside>;
+}
+
+function FactList() {
+  return <section>Fact list</section>;
 }
 
 export default App;
