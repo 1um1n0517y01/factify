@@ -85,38 +85,46 @@ function FactList() {
     <section>
       <ul className='facts-list'>
         {facts.map((fact) => (
-          <li key={fact.id} className='fact'>
-            <p>
-              {fact.text}
-              <a
-                className='source'
-                href={fact.source}
-                target='_blank'
-                rel='noreferrer'
-              >
-                (Source)
-              </a>
-            </p>
-            {/* For style Object inside of the {} */}
-            <span
-              className='tag'
-              style={{
-                backgroundColor: CATEGORIES.find(
-                  (cat) => cat.name === fact.category
-                ).color,
-              }}
-            >
-              {fact.category}
-            </span>
-            <div className='fact-buttons'>
-              <button>👍 {fact.votesInteresting}</button>
-              <button>🤯 {fact.votesMindblowing}</button>
-              <button>⛔️ {fact.votesFalse}</button>
-            </div>
-          </li>
+          <Fact key={fact.id} fact={fact} myProp='myName' />
         ))}
       </ul>
+      <p>There are {facts.length} facts in the database. Add your own!</p>
     </section>
+  );
+}
+
+// Destructuring props
+function Fact({ fact, myProp }) {
+  console.log(myProp);
+  return (
+    <li className='fact'>
+      <p>
+        {fact.text}
+        <a
+          className='source'
+          href={fact.source}
+          target='_blank'
+          rel='noreferrer'
+        >
+          (Source)
+        </a>
+      </p>
+      {/* For style Object inside of the {} */}
+      <span
+        className='tag'
+        style={{
+          backgroundColor: CATEGORIES.find((cat) => cat.name === fact.category)
+            .color,
+        }}
+      >
+        {fact.category}
+      </span>
+      <div className='fact-buttons'>
+        <button>👍 {fact.votesInteresting}</button>
+        <button>🤯 {fact.votesMindblowing}</button>
+        <button>⛔️ {fact.votesFalse}</button>
+      </div>
+    </li>
   );
 }
 
