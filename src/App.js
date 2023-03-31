@@ -55,16 +55,19 @@ const initialFacts = [
 function App() {
   // Define state variable
   const [showForm, setShowForm] = useState(false);
+  const [facts, setFacts] = useState(initialFacts);
 
   return (
     // We can use fragment <></> as parent element if we want to use more than one JSX element in return statement
     <>
       <Header showForm={showForm} setShowForm={setShowForm} />
       {/* Displaying form if showForm is true */}
-      {showForm ? <NewFactForm /> : null}
+      {showForm ? (
+        <NewFactForm setFacts={setFacts} setShowForm={setShowForm} />
+      ) : null}
       <main className='main'>
         <CategoryFilter />
-        <FactList />
+        <FactList facts={facts} />
       </main>
     </>
   );
@@ -110,7 +113,7 @@ function isValidHttpUrl(string) {
   return url.protocol === 'http:' || url.protocol === 'https:';
 }
 
-function NewFactForm() {
+function NewFactForm({ setFacts, setShowForm }) {
   const [text, setText] = useState('');
   const [source, setSource] = useState('http://example.com');
   const [category, setCategory] = useState('');
@@ -133,9 +136,17 @@ function NewFactForm() {
         votesFalse: 0,
         createdIn: new Date().getFullYear,
       };
+
       // 4. Add new fact to the user interface
+      setFacts((facts) => [newFact, ...facts]);
+
       // 5. Reset the input fields
+      setText('');
+      setSource('');
+      setCategory('');
+
       // 6. Close the form
+      setShowForm(false);
     }
   }
 
@@ -197,10 +208,7 @@ function CategoryFilter() {
   );
 }
 
-function FactList() {
-  // Temporary
-  const facts = initialFacts;
-
+function FactList({ facts }) {
   return (
     <section>
       <ul className='facts-list'>
