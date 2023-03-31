@@ -1,4 +1,5 @@
 // import { useState } from 'react';
+import { useState } from 'react';
 import './style.css';
 
 const initialFacts = [
@@ -52,6 +53,9 @@ const initialFacts = [
 // }
 
 function App() {
+  // Define state variable
+  const [showForm, setShowForm] = useState(false);
+
   const appTitle = 'Factify';
 
   return (
@@ -63,11 +67,16 @@ function App() {
           <img src='logo.png' alt='Factify logo' width='68' height='68' />
           <h1>{appTitle}</h1>
         </div>
-        <button className='btn btn-large btn-open'>Share a fact</button>
+        <button
+          className='btn btn-large btn-open'
+          onClick={() => setShowForm(!showForm)}
+        >
+          Share a fact
+        </button>
       </header>
 
-      {/* <Counter /> */}
-      <NewFactForm />
+      {/* Displaying form if showForm is true */}
+      {showForm ? <NewFactForm /> : null}
       <main className='main'>
         <CategoryFilter />
         <FactList />
