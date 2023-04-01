@@ -121,6 +121,11 @@ h1 {
   transition: 0.3s;
 }
 
+.fact-buttons button:disabled {
+  background-color: #44403c;
+  transition: 0.3s;
+}
+
 ul {
   list-style: none;
 }
