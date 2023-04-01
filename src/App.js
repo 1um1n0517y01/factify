@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import supabase from './supabase';
-import './style.css';
+import './index.css';
 
 const initialFacts = [
   {
@@ -138,7 +138,7 @@ function isValidHttpUrl(string) {
 
 function NewFactForm({ setFacts, setShowForm }) {
   const [text, setText] = useState('');
-  const [source, setSource] = useState('http://example.com');
+  const [source, setSource] = useState('');
   const [category, setCategory] = useState('');
   const [isUploading, setIsUploading] = useState(false);
   const textLength = text.length;
@@ -265,6 +265,8 @@ function FactList({ facts, setFacts }) {
 // Destructuring props
 function Fact({ fact, setFacts, myProp }) {
   const [isUpdating, setIsUpdating] = useState(false);
+  const isDisputed =
+    fact.votesInteresting + fact.votesMindblowing < fact.votesFalse;
 
   async function handleVote(columnName) {
     setIsUpdating(true);
@@ -284,6 +286,7 @@ function Fact({ fact, setFacts, myProp }) {
   return (
     <li className='fact'>
       <p>
+        {isDisputed ? <span className='disputed'>[⛔DISPUTED]</span> : null}
         {fact.text}
         <a
           className='source'
