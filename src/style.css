@@ -121,6 +121,11 @@ h1 {
   transition: 0.3s;
 }
 
+.fact-buttons button:disabled {
+  background-color: #44403c;
+  transition: 0.3s;
+}
+
 ul {
   list-style: none;
 }
@@ -203,6 +208,15 @@ ul {
 
 .hidden {
   display: none !important;
+}
+
+.message {
+  text-align: center;
+  text-transform: uppercase;
+  font-size: 24px;
+  font-weight: 800;
+  margin-top: 20px;
+  margin-bottom: 50px;
 }
 
 @media (max-width: 1200px) {

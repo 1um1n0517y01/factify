@@ -29,8 +29,7 @@ async function loadFacts() {
       headers: {
         apikey:
           'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJ5cW52d3Z4bWJxeWVua3VsaWZnIiwicm9sZSI6ImFub24iLCJpYXQiOjE2ODAwMjU1NDMsImV4cCI6MTk5NTYwMTU0M30.yBq5yf4YQfB7MDaRHEawWW698yqCs8nhGl4nvOuMSsc',
-        authorization:
-          'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InJ5cW52d3Z4bWJxeWVua3VsaWZnIiwicm9sZSI6ImFub24iLCJpYXQiOjE2ODAwMjU1NDMsImV4cCI6MTk5NTYwMTU0M30.yBq5yf4YQfB7MDaRHEawWW698yqCs8nhGl4nvOuMSsc',
+        authorization: 'Bearer <some_token>',
       },
     }
   );
