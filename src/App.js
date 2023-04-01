@@ -1,4 +1,3 @@
-// import { useState } from 'react';
 import { useEffect, useState } from 'react';
 import supabase from './supabase';
 import './style.css';
@@ -37,48 +36,40 @@ const initialFacts = [
   },
 ];
 
-// function Counter() {
-//   const [count, setCount] = useState(0);
-
-//   return (
-//     <div>
-//       <span style={{ fontSize: '40px' }}>{count}</span>
-//       <button
-//         className='btn btn-large'
-//         onClick={() => setCount((count) => count + 1)}
-//       >
-//         +1
-//       </button>
-//     </div>
-//   );
-// }
-
 function App() {
   // Define state variable
   const [showForm, setShowForm] = useState(false);
   const [facts, setFacts] = useState([]);
+  const [currentCategory, setCurrentCategory] = useState('all');
 
   // Loader state
   const [isLoading, setIsLoading] = useState(false);
 
-  // useEffect renders just the first time the component loads with parameter []
-  useEffect(function () {
-    async function getFacts() {
-      // Set load to true
-      setIsLoading(true);
+  // useEffect renders just the first time the component loads with parameter [], when we put state variable in the array, it will also render when that variable state has changed
+  useEffect(
+    function () {
+      async function getFacts() {
+        // Set load to true
+        setIsLoading(true);
 
-      const { data: facts, error } = await supabase
-        .from('facts')
-        .select('*')
-        .order('votesInteresting', { ascending: false })
-        .limit(1000);
-      if (!error) setFacts(facts);
-      else alert('There was a preoblem fetching data');
-      setIsLoading(false);
-    }
+        let query = supabase.from('facts').select('*');
 
-    getFacts();
-  }, []);
+        if (currentCategory !== 'all')
+          query = query.eq('category', currentCategory);
+
+        const { data: facts, error } = await query
+          .order('votesInteresting', { ascending: false })
+          .limit(1000);
+
+        if (!error) setFacts(facts);
+        else alert('There was a preoblem fetching data');
+        setIsLoading(false);
+      }
+
+      getFacts();
+    },
+    [currentCategory]
+  );
 
   return (
     // We can use fragment <></> as parent element if we want to use more than one JSX element in return statement
@@ -89,7 +80,7 @@ function App() {
         <NewFactForm setFacts={setFacts} setShowForm={setShowForm} />
       ) : null}
       <main className='main'>
-        <CategoryFilter />
+        <CategoryFilter setCurrentCategory={setCurrentCategory} />
         {/* Load facts when they arrive */}
         {isLoading ? <Loader /> : <FactList facts={facts} />}
       </main>
@@ -211,12 +202,17 @@ function NewFactForm({ setFacts, setShowForm }) {
   );
 }
 
-function CategoryFilter() {
+function CategoryFilter({ setCurrentCategory }) {
   return (
     <aside>
       <ul>
         <li className='category'>
-          <button className='btn btn-all-categories'>All</button>
+          <button
+            className='btn btn-all-categories'
+            onClick={() => setCurrentCategory('all')}
+          >
+            All
+          </button>
         </li>
         {/* map items need to have a key prop */}
         {CATEGORIES.map((cat) => (
@@ -226,6 +222,7 @@ function CategoryFilter() {
               style={{
                 backgroundColor: cat.color,
               }}
+              onClick={() => setCurrentCategory(cat.name)}
             >
               {cat.name}
             </button>
@@ -237,6 +234,13 @@ function CategoryFilter() {
 }
 
 function FactList({ facts }) {
+  if (facts.length === 0) {
+    return (
+      <p className='message'>
+        There are no facts for this category yet! Create the first one ✌️
+      </p>
+    );
+  }
   return (
     <section>
       <ul className='facts-list'>
